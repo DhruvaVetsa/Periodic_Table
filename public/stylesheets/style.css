@@ -1,0 +1,197 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13pt;
+  background-color: black;
+}
+
+.smallTextElementName {
+  font-size: 10px;
+  margin-top: 0px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.ElementSymbol {
+  text-align: center;
+  font-size: 20pt;
+  margin-bottom: 0px;
+  margin-top: 15px;
+  font-weight: bolder;
+}
+
+td div {
+  width: 70px;
+  height: 50px;
+  color: white;
+}
+
+.elementTD,
+.splitPeriodicTableElementCell {
+  border: 1px solid black;
+  width: 70px;
+  height: 50px;
+}
+
+.atomicNumber {
+  font-size: 10px !important;
+  margin-top: -60px;
+  margin-left: 5px;
+}
+
+.transitionMetals {
+  background-color: rgb(245, 57, 81) !important;
+}
+
+.reactiveNonMetals {
+  background-color: rgb(0, 182, 188);
+}
+
+.alkalis {
+  background-color: rgb(25, 103, 203);
+}
+
+.alkaliEarthMetals {
+  background-color: rgb(161, 102, 160);
+}
+
+.nobleGasses {
+  background-color: rgb(50, 144, 144);
+}
+
+.Lanthanides {
+  background-color: rgb(0, 78, 117);
+}
+
+.Actinides {
+  background-color: rgb(90, 45, 88);
+}
+
+.metalloids {
+  background-color: rgb(245, 182, 89);
+}
+
+.halogens {
+  background-color: rgb(89, 207, 110);
+}
+
+.basicmetals {
+  background-color: rgb(243, 109, 74);
+}
+
+.unknown {
+  background-color: rgb(133, 153, 152);
+}
+
+#popupDiv {
+  position: fixed;
+  display: none;
+  width: 100%;
+  top: -100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: opacity 3s ease-in-out;
+  overflow: hidden;
+}
+
+#popupDiv div {
+  background-color: white;
+  height: 500px;
+  width: 800px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid black;
+  position: absolute;
+  color: black;
+  padding: 20px;
+}
+
+#popupDiv:target {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+}
+
+#popupDiv:target div {
+  position: absolute;
+  display: block;
+  top: 50px;
+  bottom: 130px;
+  left: 130px;
+  right: 130px;
+}
+
+#crossButton {
+  color: red;
+  text-decoration: none;
+  font-weight: bolder;
+  float: right;
+  left: 1130px;
+  font-size: 30pt;
+  width: 50px;
+  text-align: center;
+}
+
+#crossButton:hover {
+  color: white;
+  background-color: red;
+  text-decoration: none;
+}
+
+.property {
+  font-weight: bold;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  height: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sourceATag {
+  color: dodgerblue;
+}
+
+.sourceATag:hover {
+  color: royalblue;
+}
+
+.sourceATag:active {
+  color: #213b8a;
+}
+
+.periods {
+  color: white;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.legend {
+  width: 10px;
+  height: 10px;
+  padding: 1px;
+  display: inline-block;
+}
+
+#legendTable {
+  color: white;
+  margin-left: 200px;
+}
+
+#legendTable td {
+  padding: 10px;
+  border: 2px solid white;
+}
+
+#periodicTableSplit {
+  margin-left: 40px;
+}
+
+.groupNumber {
+  color: white;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 15pt;
+}
