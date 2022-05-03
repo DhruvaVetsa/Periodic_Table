@@ -38,10 +38,10 @@
                                 <% } else if (value == "er") { %>
                                     </tr>
                                 <% } else { %>
-                                    <td onclick='createPopup(<%= value %>)' class="elementTD <%= period_class[value - 1] %>">
+                                    <td onclick='createPopup(<%=  %>)' class="elementTD <%= period_class[value - 1] %>">
                                         <div>
                                             <p class="ElementSymbol"><%= elements_data[spdf_block_elements[value-1]]["symbol"] %></p>
-                                            <p class="smallTextElementName"><%= elements_data[value-1] %></p>
+                                            <p class="smallTextElementName"><%= elements_data[spdf_block_elements[value-1]]["name"] %></p>
                                             <p class="atomicNumber"><%= elements_data[spdf_block_elements[value-1]]["number"] %></p>
                                         </div>
                                     </td>
@@ -78,7 +78,7 @@
                         <td onclick='createPopup(<%= value %>)' class="elementTD <%= period_class[value - 1] %>">
                             <div>
                                 <p class="ElementSymbol"><%= elements_data[spdf_block_elements[value-1]]["symbol"] %></p>
-                                <p class="smallTextElementName"><%= spdf_block_elements[value-1] %></p>
+                                <p class="smallTextElementName"><%= elements_data[spdf_block_elements[value-1]]["name"] %></p>
                                 <p class="atomicNumber"><%= elements_data[spdf_block_elements[value-1]]["number"] %></p>
                             </div>
                         </td>
