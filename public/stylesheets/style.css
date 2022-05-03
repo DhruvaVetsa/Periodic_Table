@@ -116,7 +116,7 @@ td div {
 #popupDiv:target div {
   position: absolute;
   display: block;
-  top: 50px;
+  top: 130px;
   bottom: 130px;
   left: 130px;
   right: 130px;

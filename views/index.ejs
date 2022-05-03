@@ -38,7 +38,7 @@
                                 <% } else if (value == "er") { %>
                                     </tr>
                                 <% } else { %>
-                                    <td onclick='createPopup(<%=  %>)' class="elementTD <%= period_class[value - 1] %>">
+                                    <td onclick='createPopup(<%= value %>)' class="elementTD <%= period_class[value - 1] %>">
                                         <div>
                                             <p class="ElementSymbol"><%= elements_data[spdf_block_elements[value-1]]["symbol"] %></p>
                                             <p class="smallTextElementName"><%= elements_data[spdf_block_elements[value-1]]["name"] %></p>
@@ -88,7 +88,7 @@
     </center>
         <div id="popupDiv">
             <div id="popupContentDiv"></div>
-            <a href="#" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes()">&times;</a>
+            <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes()">&times;</a>
         </div><br><br>
         <table id="legendTable">
             <tr>
