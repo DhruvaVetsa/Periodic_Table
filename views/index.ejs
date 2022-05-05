@@ -1,115 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Periodic Table</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <% if (!isPopup) { %>
+        <link rel="stylesheet" href="/stylesheets/popup-invalid.css">
+        <% } else { %>
+            <link rel="stylesheet" href="/stylesheets/popup-valid.css">
+            <% } %>
 </head>
+
 <body>
     <br><br>
     <center>
         <div style="margin: auto; display: block;">
             <table>
                 <tr>
-                    <td><h3 class="periods">1</h3></td>
+                    <td>
+                        <h3 class="periods">1</h3>
+                    </td>
                     <td rowspan="7">
                         <table id="mainPeriodicTable">
-                            <% spd_data_follower.forEach((value, index) => { %>
-                                <% if (value == null) { %>
-                                    <td><div></div></td>
-                                <% } else if (value == "Lanthanides-Label") { %>
-                                    <td style="border: 1px solid;" class="Lanthanides">
-                                        <div>
-                                            <p class="smallTextElementName">Lanthanides</p>
-                                            <p class="ElementSymbol">*</p>
-                                        </div>
+                            <% spd_data_follower.forEach((value, index)=> { %>
+                                <% if (value==null) { %>
+                                    <td>
+                                        <div></div>
                                     </td>
-                                <% } else if (value == "Actinides-Label") { %>
-                                    <td style="border: 1px solid black;" class="Actinides">
-                                        <div>
-                                            <p class="smallTextElementName">Actinides</p>
-                                            <p class="ElementSymbol">**</p>
-                                        </div>
-                                    </td>
-                                <% } else if (value == "sr") { %>
-                                    <tr>
-                                <% } else if (value == "er") { %>
-                                    </tr>
-                                <% } else { %>
-                                    <td onclick='createPopup(<%= value %>)' class="elementTD <%= period_class[value - 1] %>">
-                                        <div>
-                                            <p class="ElementSymbol"><%= elements_data[spdf_block_elements[value-1]]["symbol"] %></p>
-                                            <p class="smallTextElementName"><%= elements_data[spdf_block_elements[value-1]]["name"] %></p>
-                                            <p class="atomicNumber"><%= elements_data[spdf_block_elements[value-1]]["number"] %></p>
-                                        </div>
-                                    </td>
-                                <% } %>
-                            <% }) %>
+                                    <% } else if (value=="Lanthanides-Label" ) { %>
+                                        <td style="border: 1px solid;" class="Lanthanides">
+                                            <div>
+                                                <p class="smallTextElementName">Lanthanides</p>
+                                                <p class="ElementSymbol">*</p>
+                                            </div>
+                                        </td>
+                                        <% } else if (value=="Actinides-Label" ) { %>
+                                            <td style="border: 1px solid black;" class="Actinides">
+                                                <div>
+                                                    <p class="smallTextElementName">Actinides</p>
+                                                    <p class="ElementSymbol">**</p>
+                                                </div>
+                                            </td>
+                                            <% } else if (value=="sr" ) { %>
+                                                <tr>
+                                                    <% } else if (value=="er" ) { %>
+                                                </tr>
+                                                <% } else { %>
+                                                    <td onclick='createPopup(<%= value %>)'
+                                                        class="elementTD <%= period_class[value - 1] %>">
+                                                        <div>
+                                                            <p class="ElementSymbol">
+                                                                <%= elements_data[spdf_block_elements[value-1]]["symbol"]
+                                                                    %>
+                                                            </p>
+                                                            <p class="smallTextElementName">
+                                                                <%= elements_data[spdf_block_elements[value-1]]["name"]
+                                                                    %>
+                                                            </p>
+                                                            <p class="atomicNumber">
+                                                                <%= elements_data[spdf_block_elements[value-1]]["number"]
+                                                                    %>
+                                                            </p>
+                                                        </div>
+                                                    </td>
+                                                    <% } %>
+                                                        <% }) %>
                         </table>
                     </td>
                 </tr>
-                <tr><td><h3 class="periods">2</h3></tr>
-                <tr><td><h3 class="periods">3</h3></tr>
-                <tr><td><h3 class="periods">4</h3></tr>
-                <tr><td><h3 class="periods">5</h3></tr>
-                <tr><td><h3 class="periods">6</h3></tr>
-                <tr><td><h3 class="periods">7</h3></tr>
+                <tr>
+                    <td>
+                        <h3 class="periods">2</h3>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="periods">3</h3>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="periods">4</h3>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="periods">5</h3>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="periods">6</h3>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="periods">7</h3>
+                </tr>
             </table>
             <br><br>
             <table>
-                <% f_data_follower.forEach((value, index) => { %>
-                    <% if (value == null) { %>
-                        <td><div></div></td>
-                    <% } else if (value == "lan_lab") { %>
-                        <td style="border: 1px solid;">
-                            <p class="smallTextElementName" style="color: white;">Lanthanides*</p>
+                <% f_data_follower.forEach((value, index)=> { %>
+                    <% if (value==null) { %>
+                        <td>
+                            <div></div>
                         </td>
-                    <% } else if (value == "act_lab") { %>
-                        <td style="border: 1px solid black;">
-                            <p class="smallTextElementName" style="color: white;">Actinides**</p>
-                        </td>
-                    <% } else if (value == "sr") { %>
-                        <tr>
-                    <% } else if (value == "er") { %>
-                        </tr>
-                    <% } else { %>
-                        <td onclick='createPopup(<%= value %>)' class="elementTD <%= period_class[value - 1] %>">
-                            <div>
-                                <p class="ElementSymbol"><%= elements_data[spdf_block_elements[value-1]]["symbol"] %></p>
-                                <p class="smallTextElementName"><%= elements_data[spdf_block_elements[value-1]]["name"] %></p>
-                                <p class="atomicNumber"><%= elements_data[spdf_block_elements[value-1]]["number"] %></p>
-                            </div>
-                        </td>
-                    <% } %>
-                <% }) %>
+                        <% } else if (value=="lan_lab" ) { %>
+                            <td style="border: 1px solid;">
+                                <p class="smallTextElementName" style="color: white;">Lanthanides*</p>
+                            </td>
+                            <% } else if (value=="act_lab" ) { %>
+                                <td style="border: 1px solid black;">
+                                    <p class="smallTextElementName" style="color: white;">Actinides**</p>
+                                </td>
+                                <% } else if (value=="sr" ) { %>
+                                    <tr>
+                                        <% } else if (value=="er" ) { %>
+                                    </tr>
+                                    <% } else { %>
+                                        <td onclick='createPopup(<%= value %>)'
+                                            class="elementTD <%= period_class[value - 1] %>">
+                                            <div>
+                                                <p class="ElementSymbol">
+                                                    <%= elements_data[spdf_block_elements[value-1]]["symbol"] %>
+                                                </p>
+                                                <p class="smallTextElementName">
+                                                    <%= elements_data[spdf_block_elements[value-1]]["name"] %>
+                                                </p>
+                                                <p class="atomicNumber">
+                                                    <%= elements_data[spdf_block_elements[value-1]]["number"] %>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <% } %>
+                                            <% }) %>
             </table>
     </center>
-        <div id="popupDiv">
-            <div id="popupContentDiv"></div>
-            <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes()">&times;</a>
-        </div><br><br>
-        <table id="legendTable">
-            <tr>
-                <td><span class="legend alkalis"></span> : <span>Alkalis</span></td>
-                <td><span class="legend nobleGasses"></span> : <span>Noble Gasses</span></td>
-                <td><span class="legend alkaliEarthMetals"></span> : <span>Alkali Earth Metals</span></td>
-                <td><span class="legend metalloids"></span> : <span>Metalloids</span></td>
-                <td><span class="legend Lanthanides"></span> : <span>Lanthanides</span></td>
-            </tr>
-            <tr>
-                <td><span class="legend reactiveNonMetals"></span> : <span>Reactive Nonmetals</span></td>
-                <td><span class="legend halogens"></span> : <span>Halogens</span></td>
-                <td><span class="legend transitionMetals"></span> : <span>Transition Metals</span></td>
-                <td><span class="legend basicmetals"></span> : <span>Basic Metals</span></td>
-                <td><span class="legend Actinides"></span> : <span>Actinides</span></td>
-            </tr>
-            <tr>
-                <td colspan="5" style="text-align: center;"><span class="legend unknown"></span> : <span>Unknown Properties</span></td>
-            </tr>
-        </table>
+    <div id="popupDiv">
+        <div id="popupContentDiv"></div>
+        <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton"
+            onclick="updateNotes()">&times;</a>
+    </div><br><br>
+    <table id="legendTable">
+        <tr>
+            <td><span class="legend alkalis"></span> : <span>Alkalis</span></td>
+            <td><span class="legend nobleGasses"></span> : <span>Noble Gasses</span></td>
+            <td><span class="legend alkaliEarthMetals"></span> : <span>Alkali Earth Metals</span></td>
+            <td><span class="legend metalloids"></span> : <span>Metalloids</span></td>
+            <td><span class="legend Lanthanides"></span> : <span>Lanthanides</span></td>
+        </tr>
+        <tr>
+            <td><span class="legend reactiveNonMetals"></span> : <span>Reactive Nonmetals</span></td>
+            <td><span class="legend halogens"></span> : <span>Halogens</span></td>
+            <td><span class="legend transitionMetals"></span> : <span>Transition Metals</span></td>
+            <td><span class="legend basicmetals"></span> : <span>Basic Metals</span></td>
+            <td><span class="legend Actinides"></span> : <span>Actinides</span></td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: center;"><span class="legend unknown"></span> : <span>Unknown
+                    Properties</span></td>
+        </tr>
+    </table>
     </div>
     <script src="/javascripts/script.js"></script>
 </body>
+
 </html>

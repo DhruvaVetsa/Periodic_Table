@@ -4,6 +4,7 @@ const router = express.Router();
 
 const data = require('../data/elements');
 
+var innerHTMLTxt;
 var element_class_var = [];
 var atom_names = require('../data/elements').spdf_blk_eles;
 const element_types_data = data.element_types_data;
@@ -49,20 +50,33 @@ atom_names.forEach((val, ind) => {
 
 
 router.get('/', (req, res, next) => {
-  res.render('index', {
-    elements_data : data.element_data,
-    spdf_block_elements : data.spdf_blk_eles,
-    spd_data_follower : data.spd_data_follower,
-    period_class : element_class_var,
-    f_data_follower : data.f_data_follower
-  });
+    res.render('index', {
+        elements_data: data.element_data,
+        spdf_block_elements: data.spdf_blk_eles,
+        spd_data_follower: data.spd_data_follower,
+        period_class: element_class_var,
+        f_data_follower: data.f_data_follower,
+        isPopup: false
+    });
 });
+
+router.get('/popup', (req, res, next) => {
+    res.render('index', {
+        elements_data: data.element_data,
+        spdf_block_elements: data.spdf_blk_eles,
+        spd_data_follower: data.spd_data_follower,
+        period_class: element_class_var,
+        f_data_follower: data.f_data_follower,
+        isPopup: true,
+        popoup_data : innerHTMLTxt
+    })
+})
 
 router.get('/create-popup/:atomic_no', (req, res, next) => {
     const atomicNumber = req.params.atomic_no;
     const allElementsNames = data.spdf_blk_eles;
     const allDataElements = data.element_data;
-    const innerHTMLTxt = `
+    innerHTMLTxt = `
     <div id="popupContentDiv">
         <span style="text-transform: capitalize;"><span class="property">Name : </span>${allElementsNames[atomicNumber - 1]}</span><br>
         <span class="property">Atomic Mass : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["atomic_mass"]}<br>
@@ -83,9 +97,5 @@ router.get('/create-popup/:atomic_no', (req, res, next) => {
     <a href="#" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes(${atomicNumber})">&times;</a>
     `;
 });
-
-var changePopupDivInnerHTML = (innerHTML) => {
-
-}
 
 module.exports = router;
