@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/interactive_periodic_table');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-module.exports = router;
+let schema = mongoose.Schema(
+  {
+    user_name_d : {
+      type : "String",
+      required : true
+    },
+    game_name_d : {
+      type : "String",
+      required : true
+    },
+    review_d : {
+      type : "String",
+      required : true
+    }
+  }
+)
+module.exports = mongoose.model('tasks', schema);

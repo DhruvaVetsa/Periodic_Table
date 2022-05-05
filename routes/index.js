@@ -1,5 +1,10 @@
 const express = require('express');
 
+const path = require('path');
+const fs = require('fs');
+
+console.log(path.join('data', 'notes.json'));
+
 const router = express.Router();
 
 const data = require('../data/elements');
@@ -76,27 +81,40 @@ router.get('/create-popup/:atomic_no', (req, res, next) => {
     const atomicNumber = req.params.atomic_no;
     const allElementsNames = data.spdf_blk_eles;
     const allDataElements = data.element_data;
+    const element_name = allElementsNames[atomicNumber - 1];
     innerHTMLTxt = `
     <div id="popupContentDiv">
-        <span style="text-transform: capitalize;"><span class="property">Name : </span>${allElementsNames[atomicNumber - 1]}</span><br>
-        <span class="property">Atomic Mass : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["atomic_mass"]}<br>
+        <span style="text-transform: capitalize;"><span class="property">Name : </span>${element_name}</span><br>
+        <span class="property">Atomic Mass : </span>${allDataElements[element_name]["atomic_mass"]}<br>
         <span class="property">Atomic Number : </span>${atomicNumber}<br>
-        <span class="property">Symbol : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["symbol"]}<br>
-        <span class="property">Appearence : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["appearance"]}<br>
-        <span class="property">Melting Point (K) : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["melt"]}<br>
-        <span class="property">Boiling Point (K) : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["boil"]}<br>
-        <span class="property">Discovered By : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["discovered_by"]}<br>
-        <span class="property">Period Number : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["period"]}<br>
-        <span class="property">State of Matter : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["state_of_matter"]}<br>
-        <span class="property">Source of Information : </span><a href="${allDataElements[allElementsNames[atomicNumber - 1]]["source"]}" class="sourceATag" target="_blank">${allDataElements[allElementsNames[atomicNumber - 1]]["source"]}</a><br>
-        <span class="property">Descrption : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["summary"]}<br>
-        <span class="property">Shell Configuration : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["electronicConfigurationNumberOfElectrons"].join()}<br>
-        <span class="property">Electronic Configuration : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["condensedElectronicConfiguration"]}<br>
-        <span class="property">Extra Notes : </span><textarea id="notesTextarea">${allDataElements[allElementsNames[atomicNumber - 1]]["notes"]}</textarea><br>
+        <span class="property">Symbol : </span>${allDataElements[element_name]["symbol"]}<br>
+        <span class="property">Appearence : </span>${allDataElements[element_name]["appearance"]}<br>
+        <span class="property">Melting Point (K) : </span>${allDataElements[element_name]["melt"]}<br>
+        <span class="property">Boiling Point (K) : </span>${allDataElements[element_name]["boil"]}<br>
+        <span class="property">Discovered By : </span>${allDataElements[element_name]["discovered_by"]}<br>
+        <span class="property">Period Number : </span>${allDataElements[element_name]["period"]}<br>
+        <span class="property">State of Matter : </span>${allDataElements[element_name]["state_of_matter"]}<br>
+        <span class="property">Source of Information : </span><a href="${allDataElements[element_name]["source"]}" class="sourceATag" target="_blank">${allDataElements[element_name]["source"]}</a><br>
+        <span class="property">Descrption : </span>${allDataElements[element_name]["summary"]}<br>
+        <span class="property">Shell Configuration : </span>${allDataElements[element_name]["electronicConfigurationNumberOfElectrons"].join()}<br>
+        <span class="property">Electronic Configuration : </span>${allDataElements[element_name]["condensedElectronicConfiguration"]}<br>
+        <span class="property">Extra Notes : </span><textarea id="notesTextarea" onchange="window.location.replace('/update-notes/${element_name}')">${allDataElements[element_name]["notes"]}</textarea><br>
     </div>
-    <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes(${atomicNumber})">&times;</a>
+    <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="window.location.replace('/update-notes/${element_name}')">&times;</a>
     `;
     res.redirect('/popup');
 });
+
+router.get('/update-notes/:element_name', (req, res, next) => {
+    var element_name = req.params.element_name;
+    console.log(element_name);
+    var allNotesJSON;
+    fs.readFile('/' + path.join('data', 'notes.json'), (err, allNotes) => {
+        if (!err) {
+            allNotesJSON = JSON.parse(allNotes);
+            console.log(allNotesJSON);
+        }
+    })
+})
 
 module.exports = router;
