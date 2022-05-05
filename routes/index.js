@@ -68,7 +68,7 @@ router.get('/popup', (req, res, next) => {
         period_class: element_class_var,
         f_data_follower: data.f_data_follower,
         isPopup: true,
-        popoup_data : innerHTMLTxt
+        popup_data : innerHTMLTxt
     })
 })
 
@@ -94,8 +94,9 @@ router.get('/create-popup/:atomic_no', (req, res, next) => {
         <span class="property">Electronic Configuration : </span>${allDataElements[allElementsNames[atomicNumber - 1]]["condensedElectronicConfiguration"]}<br>
         <span class="property">Extra Notes : </span><textarea id="notesTextarea">${allDataElements[allElementsNames[atomicNumber - 1]]["notes"]}</textarea><br>
     </div>
-    <a href="#" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes(${atomicNumber})">&times;</a>
+    <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="updateNotes(${atomicNumber})">&times;</a>
     `;
+    res.redirect('/popup');
 });
 
 module.exports = router;

@@ -1,0 +1,17 @@
+#popupDiv {
+    position: fixed;
+    display: none;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: opacity 3s ease-in-out;
+    overflow: hidden;
+}
+
+#popupDiv div {
+    position: absolute;
+    display: block;
+    top: 130px;
+    bottom: 130px;
+    left: 130px;
+    right: 130px;
+}
