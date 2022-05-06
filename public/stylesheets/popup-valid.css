@@ -6,6 +6,8 @@
     left: 0px;
     font-size: 30pt;
     width: 50px;
+    border: none;
+    border-radius: 0px;
     text-align: center;
     position: relative;
 }
