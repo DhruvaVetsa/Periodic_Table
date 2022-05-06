@@ -27,7 +27,7 @@
 
 #popupDiv div {
     background-color: white;
-    height: 500px;
+    height: fit-content;
     width: 800px;
     display: block;
     margin-left: auto;

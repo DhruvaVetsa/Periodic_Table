@@ -1,14 +1,12 @@
 const express = require('express');
 
-const path = require('path');
-const fs = require('fs');
-
-console.log(path.join('data', 'notes.json'));
-
 const router = express.Router();
 
 const data = require('../data/elements');
 
+const notes_db = require('./users');
+
+var note_var;
 var innerHTMLTxt;
 var element_class_var = [];
 var atom_names = require('../data/elements').spdf_blk_eles;
@@ -73,7 +71,7 @@ router.get('/popup', (req, res, next) => {
         period_class: element_class_var,
         f_data_follower: data.f_data_follower,
         isPopup: true,
-        popup_data : innerHTMLTxt
+        popup_data: innerHTMLTxt
     })
 })
 
@@ -82,38 +80,81 @@ router.get('/create-popup/:atomic_no', (req, res, next) => {
     const allElementsNames = data.spdf_blk_eles;
     const allDataElements = data.element_data;
     const element_name = allElementsNames[atomicNumber - 1];
-    innerHTMLTxt = `
-    <div id="popupContentDiv">
-        <span style="text-transform: capitalize;"><span class="property">Name : </span>${element_name}</span><br>
-        <span class="property">Atomic Mass : </span>${allDataElements[element_name]["atomic_mass"]}<br>
-        <span class="property">Atomic Number : </span>${atomicNumber}<br>
-        <span class="property">Symbol : </span>${allDataElements[element_name]["symbol"]}<br>
-        <span class="property">Appearence : </span>${allDataElements[element_name]["appearance"]}<br>
-        <span class="property">Melting Point (K) : </span>${allDataElements[element_name]["melt"]}<br>
-        <span class="property">Boiling Point (K) : </span>${allDataElements[element_name]["boil"]}<br>
-        <span class="property">Discovered By : </span>${allDataElements[element_name]["discovered_by"]}<br>
-        <span class="property">Period Number : </span>${allDataElements[element_name]["period"]}<br>
-        <span class="property">State of Matter : </span>${allDataElements[element_name]["state_of_matter"]}<br>
-        <span class="property">Source of Information : </span><a href="${allDataElements[element_name]["source"]}" class="sourceATag" target="_blank">${allDataElements[element_name]["source"]}</a><br>
-        <span class="property">Descrption : </span>${allDataElements[element_name]["summary"]}<br>
-        <span class="property">Shell Configuration : </span>${allDataElements[element_name]["electronicConfigurationNumberOfElectrons"].join()}<br>
-        <span class="property">Electronic Configuration : </span>${allDataElements[element_name]["condensedElectronicConfiguration"]}<br>
-        <span class="property">Extra Notes : </span><textarea id="notesTextarea" onchange="window.location.replace('/update-notes/${element_name}')">${allDataElements[element_name]["notes"]}</textarea><br>
-    </div>
-    <a href="/" title="Go Back to the Periodic Table of Elements!" id="crossButton" onclick="window.location.replace('/update-notes/${element_name}')">&times;</a>
-    `;
-    res.redirect('/popup');
+    notes_db.findOne({ element: element_name }, (err, notes) => {
+        if (notes != null) {
+            notes_db.findOne({ element: element_name }).then((d) => {
+                note_var = d.note;
+                innerHTMLTxt = `
+                <div id="popupContentDiv">
+                    <span style="text-transform: capitalize;"><span class="property">Name : </span>${element_name}</span><br>
+                    <span class="property">Atomic Mass : </span>${allDataElements[element_name]["atomic_mass"]}<br>
+                    <span class="property">Atomic Number : </span>${atomicNumber}<br>
+                    <span class="property">Symbol : </span>${allDataElements[element_name]["symbol"]}<br>
+                    <span class="property">Appearence : </span>${allDataElements[element_name]["appearance"]}<br>
+                    <span class="property">Melting Point (K) : </span>${allDataElements[element_name]["melt"]}<br>
+                    <span class="property">Boiling Point (K) : </span>${allDataElements[element_name]["boil"]}<br>
+                    <span class="property">Discovered By : </span>${allDataElements[element_name]["discovered_by"]}<br>
+                    <span class="property">Period Number : </span>${allDataElements[element_name]["period"]}<br>
+                    <span class="property">State of Matter : </span>${allDataElements[element_name]["state_of_matter"]}<br>
+                    <span class="property">Source of Information : </span><a href="${allDataElements[element_name]["source"]}" class="sourceATag" target="_blank">${allDataElements[element_name]["source"]}</a><br>
+                    <span class="property">Descrption : </span>${allDataElements[element_name]["summary"]}<br>
+                    <span class="property">Shell Configuration : </span>${allDataElements[element_name]["electronicConfigurationNumberOfElectrons"].join()}<br>
+                    <span class="property">Electronic Configuration : </span>${allDataElements[element_name]["condensedElectronicConfiguration"]}<br>
+                    <form action="/update-notes/${element_name}" method="POST">
+                        <span class="property">Extra Notes : </span><textarea id="notesTextarea" name="notesTextArea" value="${note_var}">${note_var}</textarea><br>
+                        <button title="Go Back to the Periodic Table of Elements!" id="crossButton" type="submit">&times;</button>
+                    </form>
+                </div>
+                `;
+                res.redirect('/popup');
+            });
+        }
+        else {
+            innerHTMLTxt = `
+            <div id="popupContentDiv">
+                <span style="text-transform: capitalize;"><span class="property">Name : </span>${element_name}</span><br>
+                <span class="property">Atomic Mass : </span>${allDataElements[element_name]["atomic_mass"]}<br>
+                <span class="property">Atomic Number : </span>${atomicNumber}<br>
+                <span class="property">Symbol : </span>${allDataElements[element_name]["symbol"]}<br>
+                <span class="property">Appearence : </span>${allDataElements[element_name]["appearance"]}<br>
+                <span class="property">Melting Point (K) : </span>${allDataElements[element_name]["melt"]}<br>
+                <span class="property">Boiling Point (K) : </span>${allDataElements[element_name]["boil"]}<br>
+                <span class="property">Discovered By : </span>${allDataElements[element_name]["discovered_by"]}<br>
+                <span class="property">Period Number : </span>${allDataElements[element_name]["period"]}<br>
+                <span class="property">State of Matter : </span>${allDataElements[element_name]["state_of_matter"]}<br>
+                <span class="property">Source of Information : </span><a href="${allDataElements[element_name]["source"]}" class="sourceATag" target="_blank">${allDataElements[element_name]["source"]}</a><br>
+                <span class="property">Descrption : </span>${allDataElements[element_name]["summary"]}<br>
+                <span class="property">Shell Configuration : </span>${allDataElements[element_name]["electronicConfigurationNumberOfElectrons"].join()}<br>
+                <span class="property">Electronic Configuration : </span>${allDataElements[element_name]["condensedElectronicConfiguration"]}<br>
+                <form action="/update-notes/${element_name}" method="POST">
+                    <span class="property">Extra Notes : </span><textarea id="notesTextarea" name="notesTextArea" value="${note_var}">${note_var}</textarea><br>
+                    <button title="Go Back to the Periodic Table of Elements!" id="crossButton" type="submit">&times;</button>
+                </form>
+            </div>
+            `;
+            res.redirect('/popup');
+        }
+    });
 });
 
-router.get('/update-notes/:element_name', (req, res, next) => {
+router.post('/update-notes/:element_name', (req, res, next) => {
     var element_name = req.params.element_name;
-    console.log(element_name);
-    var allNotesJSON;
-    fs.readFile('/' + path.join('data', 'notes.json'), (err, allNotes) => {
-        if (!err) {
-            allNotesJSON = JSON.parse(allNotes);
-            console.log(allNotesJSON);
+    var data_to_be_uploaded = {
+        element: element_name,
+        note: req.body.notesTextArea
+    }
+    notes_db.findOne({ element: element_name }, (err, notes) => {
+        if (notes == null) {
+            notes_db.create(data_to_be_uploaded).then((d) => {
+                res.redirect('/');
+            });
         }
+        else {
+            notes_db.findOneAndUpdate({ element: element_name }, { "$set": data_to_be_uploaded }, { require: true }).then(completeUData => {
+                res.redirect('/');
+            })
+        }
+
     })
 })
 
