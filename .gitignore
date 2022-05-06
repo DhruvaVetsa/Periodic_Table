@@ -101,10 +101,3 @@ dist
 .dynamodb/
 
 # TernJS port file
-.tern-port
-
-# HTML Files
-*.html
-
-# Others 
-8
