@@ -1,15 +1,17 @@
 #crossButton {
+    position: absolute;
     color: red;
     text-decoration: none;
     font-weight: bolder;
     float: right;
-    left: 0px;
+    left: 1095px;
+    top: -105px;
     font-size: 30pt;
     width: 50px;
     border: none;
     border-radius: 0px;
     text-align: center;
-    position: relative;
+    background-color: transparent;
 }
 
 #popupDiv {
