@@ -1,10 +1,6 @@
-const express = require('express');
-
-const router = express.Router();
-
 const data = require('../data/elements');
 
-const notes_db = require('./users');
+const notes_db = require('../routes/users-routes');
 
 var note_var;
 var innerHTMLTxt;
@@ -50,9 +46,7 @@ atom_names.forEach((val, ind) => {
     }
 });
 
-
-
-router.get('/', (req, res, next) => {
+exports.getIndex = (req, res, next) => {
     res.render('index', {
         elements_data: data.element_data,
         spdf_block_elements: data.spdf_blk_eles,
@@ -61,9 +55,9 @@ router.get('/', (req, res, next) => {
         f_data_follower: data.f_data_follower,
         isPopup: false
     });
-});
+};
 
-router.get('/popup', (req, res, next) => {
+exports.getPopup = (req, res, next) => {
     res.render('index', {
         elements_data: data.element_data,
         spdf_block_elements: data.spdf_blk_eles,
@@ -73,9 +67,9 @@ router.get('/popup', (req, res, next) => {
         isPopup: true,
         popup_data: innerHTMLTxt
     })
-})
+}
 
-router.get('/create-popup/:atomic_no', (req, res, next) => {
+exports.getCreatePopup = (req, res, next) => {
     const atomicNumber = req.params.atomic_no;
     const allElementsNames = data.spdf_blk_eles;
     const allDataElements = data.element_data;
@@ -135,9 +129,9 @@ router.get('/create-popup/:atomic_no', (req, res, next) => {
             res.redirect('/popup');
         }
     });
-});
+}
 
-router.post('/update-notes/:element_name', (req, res, next) => {
+exports.postUpdateNotes = (req, res, next) => {
     var element_name = req.params.element_name;
     var data_to_be_uploaded = {
         element: element_name,
@@ -156,6 +150,4 @@ router.post('/update-notes/:element_name', (req, res, next) => {
         }
 
     })
-})
-
-module.exports = router;
+}
